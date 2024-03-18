@@ -1,5 +1,5 @@
+/* 
 
-//console.log(myContainer);
 const API_TOKEN = "5JXKTKJjED4B2grbFIxtpkXIs749Grd5";
 
 const API = "https://api.giphy.com/v1/gifs/search?api_key=" + API_TOKEN;
@@ -29,4 +29,38 @@ const TRENDING_API =
     });
   }
 
-  
+   */
+const API_TOKEN = "5JXKTKJjED4B2grbFIxtpkXIs749Grd5";
+
+const TRENDING_GIFS_ENDPOINT = `https://api.giphy.com/v1/gifs/trending?api_key=${API_TOKEN}&limit=25&rating=g`;
+const TRENDING_STICKERS_ENDPOINT = `https://api.giphy.com/v1/stickers/trending?api_key=${API_TOKEN}&limit=25&rating=g`;
+
+async function fetchTrendingGIFs() {
+  try {
+      const response = await fetch(TRENDING_GIFS_ENDPOINT);
+      const data = await response.json();
+      console.log(data.data);
+      return data.data;
+  } catch (error) {
+      console.error('Error fetching trending GIFs:', error);
+      return null;
+  }
+}
+function displayTrendingGIFs(gifs) {
+  const container = document.querySelector('.container');
+  if (!container) {
+      console.error('Container element not found');
+      return;
+  }
+      gifs.forEach(gif => {
+      const gifElement = document.createElement('img');
+      gifElement.src = gif.images.fixed_height.url;
+      container.appendChild(gifElement);
+   });
+  }
+  fetchTrendingGIFs()
+  .then(trendingGIFs => {
+      if (trendingGIFs) {
+          displayTrendingGIFs(trendingGIFs);
+      }
+  });
