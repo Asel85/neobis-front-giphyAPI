@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   searchButton.addEventListener('click', async (event) => {
       event.preventDefault();
       searchForm.dispatchEvent(new Event('submit'));
+      searchInput.value="";
   });
 });
 
